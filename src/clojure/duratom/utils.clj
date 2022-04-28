@@ -8,7 +8,6 @@
            (java.util.concurrent.locks Lock)
            (java.util.concurrent.atomic AtomicBoolean)
            (java.sql BatchUpdateException)
-           (dbaos DirectByteArrayOutputStream)
            (java.security MessageDigest)
            (java.util Base64)
            (duratom.readers ObjectWithMeta)
@@ -58,7 +57,7 @@
    (s3-bucket-bytes 4096 s3-in))
   (^bytes [buffer-size s3-in]
    (with-open [in (jio/input-stream s3-in)
-               out (DirectByteArrayOutputStream. (int buffer-size))] ;; allows for copy-less streaming when size is known
+               out (ByteArrayOutputStream. (int buffer-size))] ;; allows for copy-less streaming when size is known
      (jio/copy in out :buffer-size buffer-size) ;; minimize number of loops required to fill the `out` buffer
      (.toByteArray out))))
 
